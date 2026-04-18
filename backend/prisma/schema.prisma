@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+    id        Int       @id @default(uuid())
+    email     String    @unique
+    name      String?   @db.VarChar(8)
+    password  String    @unique
+    role      Role      @default(MEMBER)
+    isOnline  Boolean   @default(false)
+    createdAt DateTime  @default(now())
+    projects  Project[]
+}
+
+enum Role {
+    MEMBER
+    MANAGER
+    ADMIN
+}
+
+model Project {
+   id        Int        @id @default(uuid())
+   title     String     @db.VarChar(255)
+   createdAt DateTime   @default(now())
+   updatedAt DateTime   @updatedAt
+   author    User       @relation(fields: [authorId], references: [id])
+   authorId  Int
+   tasks     Task       @relation(field: [taskId], references: [id])
+   taskId    Int
+}
+
+model Task {
+    id      Int     @id @default(uuid())
+    title   String  @db.VarChar(255)
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    project   Project[]
+}
+
+model Time-Entries {
+    id          Int         @id @default(uuid())
+    startTime   DateTime    @createdAt
+    endTime     DateTime
+    user        User        @relation(filed: [userid], references: [id])
+    userId      Int
+    tasks       Task        @relation(field: [taskId], references: [id])
+    taskId      Int
+}
