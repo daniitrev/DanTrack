@@ -4,23 +4,26 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+    provider = "postgresql"
 }
 
 model User {
-    id        Int       @id @default(uuid())
-    email     String    @unique
-    name      String?   @db.VarChar(8)
-    password  String    @unique
-    role      Role      @default(MEMBER)
-    isOnline  Boolean   @default(false)
-    createdAt DateTime  @default(now())
-    projects  Project[]
+    userId         String    @id @default(uuid())
+    email          String    @unique
+    name           String?   @db.VarChar(255)
+    password       String
+    role           Role      @default(MEMBER)
+    lastSeenAt     DateTime  @default(now())
+    createdAt      DateTime  @default(now())
+    tasks          Task[]
+    projects       Project[]
+    memberProjects MemberProject[]
+    timeEntries    TimeEntry[]
 }
 
 enum Role {
@@ -30,30 +33,57 @@ enum Role {
 }
 
 model Project {
-   id        Int        @id @default(uuid())
-   title     String     @db.VarChar(255)
-   createdAt DateTime   @default(now())
-   updatedAt DateTime   @updatedAt
-   author    User       @relation(fields: [authorId], references: [id])
-   authorId  Int
-   tasks     Task       @relation(field: [taskId], references: [id])
-   taskId    Int
+    projectId      String     @id @default(uuid())
+    title          String     @db.VarChar(255)
+    description    String?    @db.Text
+    createdAt      DateTime   @default(now())
+    updatedAt      DateTime   @updatedAt
+    owner          User       @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
+    ownerId        String
+    @@index([ownerId])
+    memberProjects MemberProject[]
+    tasks          Task[]
+}
+
+model MemberProject {
+    member      User     @relation(fields: [memberId], references: [userId], onDelete: Cascade)
+    memberId    String
+    project     Project  @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+    projectId   String
+    assignedAt  DateTime @default(now())
+    @@id([memberId, projectId])
 }
 
 model Task {
-    id      Int     @id @default(uuid())
-    title   String  @db.VarChar(255)
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    project   Project[]
+    taskId       String   @id @default(uuid())
+    title        String   @db.VarChar(255)
+    description  String?  @db.Text
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    status       Status   @default(TODO)
+    project      Project  @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+    projectId    String
+    creator      User     @relation(fields: [creatorId], references: [userId], onDelete: Cascade)
+    creatorId    String
+    @@index([creatorId])
+    timeEntry    TimeEntry[]
 }
 
-model Time-Entries {
-    id          Int         @id @default(uuid())
-    startTime   DateTime    @createdAt
-    endTime     DateTime
-    user        User        @relation(filed: [userid], references: [id])
-    userId      Int
-    tasks       Task        @relation(field: [taskId], references: [id])
-    taskId      Int
+enum Status {
+    TODO
+    IN_PROGRESS
+    DONE
+}
+
+model TimeEntry {
+    timeEntryId String    @id @default(uuid())
+    startTime   DateTime  @default(now())
+    endTime     DateTime?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    worker    User      @relation(fields: [workerId], references: [userId], onDelete: Cascade)
+    workerId  String
+    task     Task      @relation(fields: [taskId], references: [taskId], onDelete: Cascade)
+    taskId   String
+    @@index([startTime, endTime])
 }
