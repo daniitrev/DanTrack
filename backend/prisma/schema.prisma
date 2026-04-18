@@ -17,6 +17,7 @@ model User {
     email          String    @unique
     name           String?   @db.VarChar(255)
     password       String
+    refreshTokens  RefreshToken[]
     role           Role      @default(MEMBER)
     lastSeenAt     DateTime  @default(now())
     createdAt      DateTime  @default(now())
@@ -25,6 +26,18 @@ model User {
     memberProjects MemberProject[]
     timeEntries    TimeEntry[]
 }
+
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String   @unique
+  userId      String
+  User        User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expireAt    DateTime
+}
+
 
 enum Role {
     MEMBER
