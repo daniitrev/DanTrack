@@ -2,16 +2,21 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
+    "format": "prettier --write \"src/**/*.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.7.0",
-    "elysia": "latest"
+    "elysia": "latest",
+    "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "bun-types": "latest",
     "dotenv": "^17.4.2",
+    "prettier": "^3.8.3",
     "prisma": "^7.7.0"
   },
   "module": "src/index.js"
