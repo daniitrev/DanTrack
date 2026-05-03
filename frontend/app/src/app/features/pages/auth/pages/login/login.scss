@@ -1,0 +1,63 @@
+:host {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top, rgba(43, 110, 246, 0.18), transparent 35%),
+    linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.login-container {
+  width: min(100%, 420px);
+}
+
+.login-card {
+  display: grid;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+}
+
+button {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.auth-error {
+  margin: 0;
+  color: #b91c1c;
+}

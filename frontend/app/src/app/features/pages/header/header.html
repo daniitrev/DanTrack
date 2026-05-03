@@ -1,0 +1,17 @@
+<header class="main-header">
+  <div class="main-header__brand">
+    <h1>Dan_Track</h1>
+  </div>
+
+  <nav class="main-header__nav">
+    <a routerLink="/main/projects" routerLinkActive="main-header__link--active" class="main-header__link">Projects</a>
+    <a routerLink="/main/tasks" routerLinkActive="main-header__link--active" class="main-header__link">Tasks</a>
+    <a routerLink="/main/reports" routerLinkActive="main-header__link--active" class="main-header__link">Reports</a>
+    <a routerLink="/main/time-entries" routerLinkActive="main-header__link--active" class="main-header__link">Time Entries</a>
+  </nav>
+
+  <app-ui-button type="button" (pressed)="logout()">
+    Выйти
+  </app-ui-button>
+
+</header>

@@ -1,0 +1,54 @@
+<section class="task-page">
+  <div class="task-shell">
+    <div class="task-page__header">
+      <div class="task-page__heading">
+        <h2>Новая задача</h2>
+        <p>Заполни основные поля для создания задачи.</p>
+      </div>
+    </div>
+
+    <form class="task-form-card" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="task-field">
+        <label for="task-title">Название задачи</label>
+        <app-ui-input
+          id="task-title"
+          type="text"
+          formControlName="title"
+          placeholder="Введите название задачи"
+        />
+      </div>
+
+      <div class="task-field">
+        <label for="task-description">Описание</label>
+        <app-ui-textarea
+          id="task-description"
+          formControlName="description"
+          placeholder="Коротко опиши задачу"
+        />
+      </div>
+
+      <div class="task-field">
+        <label for="task-priority">Приоритет</label>
+        <select id="task-priority" class="task-select" formControlName="priority">
+          @for (priority of priorityOptions; track priority) {
+            <option [value]="priority">{{ priority }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="task-field">
+        <label for="task-project">Проект</label>
+        <select id="task-project" class="task-select" formControlName="projectId">
+          <option value="">Выбери проект</option>
+          @for (project of projectStore.projectPage(); track project.projectId) {
+            <option [value]="project.projectId">{{ project.title }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="task-form__actions">
+        <app-ui-button type="submit">Создать задачу</app-ui-button>
+      </div>
+    </form>
+  </div>
+</section>

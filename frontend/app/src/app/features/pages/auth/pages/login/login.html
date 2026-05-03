@@ -1,0 +1,27 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Авторизация</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="Введите email" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Введите пароль"
+        />
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Войти</button>
+    </form>
+    @if (store.userState.error()) {
+      <p class="auth-error">{{ store.userState.error() }}</p>
+    }
+    <a routerLink="/registration">Регистрация</a>
+  </div>
+</div>
