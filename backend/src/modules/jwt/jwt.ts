@@ -12,7 +12,7 @@ if (!JWT_SECRET) {
 
 export function generateAccessToken(user: UserCreateInput) {
   return jwt.sign({ userId: user.userId }, JWT_SECRET, {
-    expiresIn: "5m",
+    expiresIn: "20m",
   });
 }
 

@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --color-dodger-blue: #1e90ff;
+  --color-cornflower-blue: #6495ed;
+  --color-medium-slate-blue: #7b68ee;
+  --color-royal-blue: #4169e1;
+  --color-white: #ffffff;
+  --color-text-main: #1f2937;
+
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 18px;
+
+  --input-height: 38px;
+  --btn-size: 38px;
+  --folder-btn-size: 38px;
+  --dialog-width: 720px;
+  --dialog-shadow: 0 20px 60px rgba(31, 41, 55, 0.18);
+
+  --app-padding: 24px 16px;
+  --card-padding: 20px;
+  --entry-padding: 14px 18px;
+  --input-row-gap: 10px;
+  --entries-gap: 8px;
+  --dialog-gap: 20px;
+
+  --color-light-gray: rgb(115 115 115);
+  --color-blue-light-bg: #eff5ff;
+  --color-blue-light-border: #6495ed;
+  --color-blue-focus-ring: rgba(30, 144, 255, 0.15);
+  --color-blue-focus-ring-desc: rgba(30, 144, 255, 0.12);
+  --color-overlay: rgba(15, 23, 42, 0.32);
+}

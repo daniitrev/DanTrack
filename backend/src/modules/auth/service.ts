@@ -9,7 +9,6 @@ import {
   revokeRefreshToken,
 } from "../jwt/refreshWhilteList";
 
-
 export class AuthService {
   static async register(body: RegisterDto) {
     try {
@@ -48,6 +47,7 @@ export class AuthService {
           userId: createdUser.userId,
           username: createdUser.name,
           email: createdUser.email,
+          jwt: tokens.accessToken,
         },
       };
       return result;
@@ -84,6 +84,7 @@ export class AuthService {
           userId: user.userId,
           username: user.name,
           email: user.email,
+          jwt: tokens.accessToken,
         },
       };
       return result;
@@ -113,6 +114,10 @@ export class AuthService {
         throw new ErrorHandler("User not found");
       }
       const tokens = generateTokens(user);
+      await refreshWhileList({
+        refreshToken: tokens.refreshToken,
+        userId: user.userId,
+      });
 
       const result = {
         tokens,

@@ -1,17 +1,17 @@
 import { RefreshModelRequest } from "./model";
+import { ErrorHandler } from "../../../middelware/utils/error/error";
 import { prisma } from "../../lib/prisma";
 import { hashToken } from "./hash";
-import { ErrorHandler } from "../../../middelware/utils/error/error";
 
 export async function refreshWhileList({
   refreshToken,
   userId,
 }: RefreshModelRequest) {
   try {
-    const refreshCreated = await prisma.refreshToken.create({
+    await prisma.refreshToken.create({
       data: {
         hashedToken: await hashToken(refreshToken),
-        userId: userId,
+        userId,
         expireAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), //30
       },
     });
@@ -45,7 +45,7 @@ export async function deleteRefreshToken(id: string) {
     return await prisma.refreshToken.delete({
       where: { id },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof Error) {
       throw error;
     }
@@ -54,7 +54,7 @@ export async function deleteRefreshToken(id: string) {
 
 export async function revokeRefreshToken(userId: string) {
   try {
-    const refreshFound = await prisma.refreshToken.updateMany({
+    await prisma.refreshToken.updateMany({
       where: {
         userId,
         revoked: false,

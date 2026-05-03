@@ -1,7 +1,9 @@
-import { Context, Elysia, t } from "elysia";
+import { Elysia, t } from "elysia";
 import { AuthService } from "./service";
-import { LoginDto, RegisterDto } from "./model";
 import { ErrorHandler } from "../../../middelware/utils/error/error";
+
+
+const isProd = process.env.NODE_ENV === "production";
 
 export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
   .post(
@@ -17,7 +19,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           cookie.refreshToken.set({
             value: result.tokens.refreshToken,
             httpOnly: true,
-            secure: true,
+            secure: isProd,
             sameSite: "strict",
             maxAge: 60 * 60 * 24 * 30,
             path: "/",
@@ -25,7 +27,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           cookie.accessToken.set({
             value: result.tokens.accessToken,
             httpOnly: false,
-            secure: true,
+            secure: isProd,
             sameSite: "lax",
             maxAge: 60 * 5,
             path: "/",
@@ -60,7 +62,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           cookie.refreshToken.set({
             value: result.tokens.refreshToken,
             httpOnly: true,
-            secure: true,
+            secure: isProd,
             sameSite: "strict",
             maxAge: 60 * 60 * 24 * 30,
             path: "/",
@@ -68,7 +70,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           cookie.accessToken.set({
             value: result.tokens.accessToken,
             httpOnly: false,
-            secure: true,
+            secure: isProd,
             sameSite: "lax",
             maxAge: 60 * 5,
             path: "/",
@@ -102,7 +104,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
         cookie.refreshToken.set({
           value: result.tokens.refreshToken,
           httpOnly: true,
-          secure: true,
+          secure: isProd,
           sameSite: "strict",
           maxAge: 60 * 60 * 24 * 30,
           path: "/",
@@ -110,7 +112,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
         cookie.accessToken.set({
           value: result.tokens.accessToken,
           httpOnly: false,
-          secure: true,
+          secure: isProd,
           sameSite: "lax",
           maxAge: 60 * 5,
           path: "/",

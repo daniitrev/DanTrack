@@ -1,93 +1,263 @@
-# Dan_Track
+# DanTrack
 
+Аналитический README по состоянию проекта на 27 апреля 2026 года.
 
+## 1. Что было проанализировано
 
-## Getting started
+- Репозиторий проекта `DanTrack` в папке `main`
+- Техническое задание из документа [TimeTrack_TZ.docx](/Users/timurdanilov/Downloads/TimeTrack_TZ.docx)
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+По содержанию ТЗ речь идет о системе трекинга времени `TimeTrack`. Текущий репозиторий `DanTrack` выглядит как реализация этого же проекта под другим названием.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 2. Краткий вывод
 
-## Add your files
+Сейчас проект находится на этапе **раннего MVP / активной технической заготовки**.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Уже есть:
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/daniit_rev-group/dan_track.git
-git branch -M main
-git push -uf origin main
-```
+- базовая архитектурная основа frontend на Angular
+- базовая серверная структура на Elysia.js
+- Prisma schema и миграции для основных сущностей
+- рабочий фундамент для auth
+- частичная реализация API для `projects`, `tasks`, `time-entries`
 
-## Integrate with your tools
+Пока отсутствует или не доведено до рабочего состояния:
 
-* [Set up project integrations](https://gitlab.com/daniit_rev-group/dan_track/-/settings/integrations)
+- полноценный пользовательский интерфейс основных модулей
+- отчеты и аналитика
+- профиль пользователя и настройки
+- ролевая модель уровня ТЗ
+- полноценная маршрутизация защищенных разделов
+- production-ready качество: тесты, линтеры, CI/CD, единый контракт API, завершенный deploy
 
-## Collaborate with your team
+## 3. Текущая стадия разработки
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### Этап
 
-## Test and Deploy
+Проект находится между стадиями:
 
-Use the built-in continuous integration in GitLab.
+1. `Проектирование и первичная настройка архитектуры`
+2. `Реализация ядра backend`
+3. `Старт frontend-разработки`
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+До стадии `feature-complete MVP` проект еще не дошел.
 
-***
+### Практическая оценка стадии
 
-# Editing this README
+Если описать состояние простыми словами, то сейчас это:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- не идея и не пустой шаблон
+- уже не только база данных и auth
+- но еще не полноценное приложение, которым можно пользоваться по сценарию из ТЗ
 
-## Suggestions for a good README
+Наиболее точная формулировка:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+**Проект на стадии технического каркаса с частично реализованным backend и ограниченно реализованным frontend.**
 
-## Name
-Choose a self-explaining name for your project.
+## 4. Что уже реализовано
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Frontend
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Реально присутствует:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- Angular 21 приложение со standalone-подходом
+- базовая настройка `provideZonelessChangeDetection()`
+- `HttpInterceptor` для подстановки access token и попытки refresh
+- формы `login` и `registration`
+- `AuthStore` на `@ngrx/signals`
+- `ApiService` и конфиг базового URL
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Ограничения текущего состояния:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- роутинг фактически сведен к `login` и `registration`
+- страницы `projects`, `tasks`, `task-entries`, `reports` созданы как файлы-заготовки, но по сути пустые
+- нет защищенного shell для авторизованной части приложения
+- нет UI-компонентной библиотеки из ТЗ
+- нет канбан-доски, таблиц, фильтров, dashboard, графиков, профиля, настроек темы и часового пояса
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Backend
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Реально присутствует:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- запуск сервера на Elysia
+- модули `auth`, `projects`, `tasks`, `time-entries`
+- middleware авторизации по JWT
+- Prisma client и схема БД
+- миграции БД
+- refresh token flow
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Что реализовано частично:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- `auth` выглядит ближе всего к рабочему модулю
+- `projects`, `tasks`, `time-entries` имеют CRUD-скелет и часть бизнес-логики
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Что не доведено:
 
-## License
-For open source projects, say how it is licensed.
+- `reports` по сути не реализован
+- отсутствует единый формат ответов `{ success, data, error, meta }`
+- часть endpoint-ов не совпадает с ТЗ по именованию и структуре
+- ролевая модель реализована частично и местами расходится с ТЗ
+- нет явной пагинации, системной валидации бизнес-правил и полноценной обработки ошибок
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### База данных
+
+Присутствуют сущности:
+
+- `User`
+- `RefreshToken`
+- `Project`
+- `MemberProject`
+- `Task`
+- `TimeEntry`
+
+Это хороший знак: модель предметной области уже начата и покрывает ядро продукта.
+
+Но есть расхождения с ТЗ:
+
+- статусы задач неполные
+- структура `TimeEntry` отличается от требуемой модели
+- часть полей и сценариев из документа пока не отражена
+
+## 5. Что показывает сравнение с ТЗ
+
+### Совпадения с ТЗ
+
+- выбранный стек в целом соответствует документу: Angular + Elysia + Prisma + PostgreSQL
+- auth реализуется в нужную сторону
+- есть сущности проектов, задач и time entries
+- есть начало state management на signals
+
+### Основные разрывы относительно ТЗ
+
+#### 1. Frontend-модули почти не реализованы
+
+По ТЗ должны быть полноценные feature-модули:
+
+- `auth`
+- `projects`
+- `tasks`
+- `time-tracking`
+- `reports`
+- `profile`
+
+Фактически из этого реально начат только `auth`.
+
+#### 2. Time tracking реализован только на уровне backend-скелета
+
+По ТЗ это ключевой модуль проекта, но сейчас нет:
+
+- полноценного UI таймера
+- отображения активного таймера в header
+- ручного ввода с полной валидацией
+- проверки пересечений
+- истории записей с удобным редактированием
+
+#### 3. Reports и analytics почти отсутствуют
+
+По ТЗ нужны:
+
+- dashboard за день / неделю / месяц
+- диаграммы
+- сводки по проектам и участникам
+- экспорт CSV
+
+В текущем коде этого нет.
+
+#### 4. Profile и settings отсутствуют
+
+Нет:
+
+- профиля пользователя
+- смены пароля
+- аватара
+- настроек темы
+- часового пояса
+- формата даты
+
+#### 5. Качество и готовность к продакшену пока низкие
+
+Из ТЗ ожидаются:
+
+- ESLint
+- strict TypeScript
+- Husky + lint-staged
+- Conventional Commits
+- тесты
+- deploy
+
+По репозиторию это пока либо отсутствует, либо не доведено.
+
+## 6. Оценка процента готовности
+
+### Итоговая оценка
+
+**Ориентировочная готовность проекта: 27%.**
+
+Это не математически точное число, а инженерная оценка по покрытию требований из ТЗ и степени завершенности кода.
+
+### Как получена оценка
+
+| Блок | Вес в проекте | Готовность блока | Вклад |
+|---|---:|---:|---:|
+| Аутентификация | 15% | 60% | 9% |
+| Проекты | 15% | 35% | 5.25% |
+| Задачи | 15% | 25% | 3.75% |
+| Трекинг времени | 20% | 30% | 6% |
+| Отчеты | 10% | 5% | 0.5% |
+| Профиль и настройки | 10% | 0% | 0% |
+| Frontend UX и навигация | 10% | 20% | 2% |
+| Качество, тесты, DevOps | 5% | 10% | 0.5% |
+
+Округленный итог: **27%**
+
+## 7. Сколько осталось до готового проекта
+
+### Осталось до полного проекта
+
+**Осталось примерно 73% работ.**
+
+Это включает не только написание кода, но и:
+
+- доведение модулей до полного функционала по ТЗ
+- выравнивание frontend и backend контрактов
+- добавление UI-компонентов
+- тестирование
+- стабилизацию бизнес-логики
+- подготовку к деплою
+
+### Что важнее всего сделать дальше
+
+1. Доделать каркас авторизованной части frontend: layout, guards, protected routes, navigation.
+2. Реализовать реальные страницы `projects`, `tasks`, `time-tracking`.
+3. Привести backend endpoint-ы и DTO к структуре из ТЗ.
+4. Завершить ключевой модуль `time tracking`, потому что это ядро продукта.
+5. Реализовать `reports` и `profile`.
+6. Добавить качество разработки: ESLint, строгую проверку типов, тесты, pre-commit hooks.
+7. Подготовить deploy и базовый production pipeline.
+
+## 8. Ключевые признаки незавершенности
+
+Ниже признаки того, что проект еще не перешел в стадию готового MVP:
+
+- README до этого был шаблонным и не отражал проект
+- в рабочем дереве много новых и незавершенных файлов
+- часть frontend-страниц пустая
+- модуль `reports` не завершен
+- нет полного соответствия API требованиям ТЗ
+- отсутствует значимая часть пользовательских сценариев
+- почти нет тестового покрытия
+
+## 9. Финальный статус
+
+### Текущий статус проекта
+
+**DanTrack сейчас находится на стадии ранней функциональной разработки.**
+
+### Оценка готовности
+
+- Готово: **27%**
+- Осталось: **73%**
+
+### Короткий вывод
+
+Проект уже вышел из состояния пустого шаблона и имеет хорошую техническую основу, особенно по backend-моделям и auth. Но до “готового проекта” по ТЗ еще далеко: основные пользовательские сценарии, полноценный frontend, аналитика, профиль, quality-практики и production-подготовка пока не завершены.
