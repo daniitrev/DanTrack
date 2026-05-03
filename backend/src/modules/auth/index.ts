@@ -4,6 +4,8 @@ import { ErrorHandler } from "../../../middelware/utils/error/error";
 
 
 const isProd = process.env.NODE_ENV === "production";
+const accessTokenMaxAge = 60 * 20;
+const refreshTokenMaxAge = 60 * 60 * 24 * 30;
 
 export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
   .post(
@@ -21,7 +23,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
             httpOnly: true,
             secure: isProd,
             sameSite: "strict",
-            maxAge: 60 * 60 * 24 * 30,
+            maxAge: refreshTokenMaxAge,
             path: "/",
           });
           cookie.accessToken.set({
@@ -29,7 +31,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
             httpOnly: false,
             secure: isProd,
             sameSite: "lax",
-            maxAge: 60 * 5,
+            maxAge: accessTokenMaxAge,
             path: "/",
           });
 
@@ -64,7 +66,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
             httpOnly: true,
             secure: isProd,
             sameSite: "strict",
-            maxAge: 60 * 60 * 24 * 30,
+            maxAge: refreshTokenMaxAge,
             path: "/",
           });
           cookie.accessToken.set({
@@ -72,7 +74,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
             httpOnly: false,
             secure: isProd,
             sameSite: "lax",
-            maxAge: 60 * 5,
+            maxAge: accessTokenMaxAge,
             path: "/",
           });
 
@@ -106,7 +108,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           httpOnly: true,
           secure: isProd,
           sameSite: "strict",
-          maxAge: 60 * 60 * 24 * 30,
+          maxAge: refreshTokenMaxAge,
           path: "/",
         });
         cookie.accessToken.set({
@@ -114,7 +116,7 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
           httpOnly: false,
           secure: isProd,
           sameSite: "lax",
-          maxAge: 60 * 5,
+          maxAge: accessTokenMaxAge,
           path: "/",
         });
         return { user: result.data };

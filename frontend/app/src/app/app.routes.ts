@@ -4,6 +4,8 @@ import { RegistrationComponent } from './features/pages/auth/pages/registration/
 import { MainPage } from './features/pages/main/main-page';
 import { TimeEntriesPage } from './features/pages/active/task-entries/time-entries-page';
 import {ReportsPage} from './features/pages/active/reports/reports';
+import {TaskPage} from './features/pages/active/task-page/task-page';
+import {ProjectPage} from './features/pages/active/project-page/project-page';
 
 export const routes: Routes = [
   {
@@ -22,13 +24,28 @@ export const routes: Routes = [
   {
     path: 'main',
     component: MainPage,
-  },
-  {
-    path: 'reports',
-    component: ReportsPage,
-  },
-  {
-    path: 'time-entries',
-    component: TimeEntriesPage,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'projects',
+      },
+      {
+        path: 'projects',
+        component: ProjectPage,
+      },
+      {
+        path: 'tasks',
+        component: TaskPage,
+      },
+      {
+        path: 'reports',
+        component: ReportsPage,
+      },
+      {
+        path: 'time-entries',
+        component: TimeEntriesPage,
+      },
+    ],
   },
 ];

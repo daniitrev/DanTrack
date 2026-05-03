@@ -59,7 +59,8 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   ownerId     String
-
+  status      Status   @default(NOT_STARTED)
+  
   owner          User            @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
   memberProjects MemberProject[]
   tasks          Task[]
