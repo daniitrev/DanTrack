@@ -17,6 +17,7 @@ model User {
   email      String   @unique
   name       String?  @db.VarChar(255)
   password   String
+  image      String?
   role       Role     @default(MEMBER)
   lastSeenAt DateTime @default(now())
   createdAt  DateTime @default(now())

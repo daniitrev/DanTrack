@@ -1,8 +1,38 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 :root {
+  --color-aqua: #00ffff;
+  --color-light-cyan: #e0ffff;
+  --color-pale-turquoise: #afeeee;
+  --color-aquamarine: #7fffd4;
+  --color-turquoise: #40e0d0;
+  --color-medium-turquoise: #48d1cc;
+  --color-dark-turquoise: #00ced1;
+  --color-cadet-blue: #5f9ea0;
+  --color-steel-blue: #4682b4;
+  --color-light-steel-blue: #b0c4de;
+  --color-powder-blue: #b0e0e6;
+  --color-light-blue: #add8e6;
+  --color-sky-blue: #87ceeb;
+  --color-light-sky-blue: #87cefa;
+  --color-deep-sky-blue: #00bfff;
   --color-dodger-blue: #1e90ff;
   --color-cornflower-blue: #6495ed;
   --color-medium-slate-blue: #7b68ee;
   --color-royal-blue: #4169e1;
+  --color-blue: #0000ff;
+  --color-medium-blue: #0000cd;
+  --color-dark-blue: #00008b;
+  --color-navy: #000080;
+  --color-midnight-blue: #191970;
   --color-white: #ffffff;
   --color-text-main: #1f2937;
 
@@ -11,6 +41,7 @@
   --border-radius-xl: 18px;
 
   --input-height: 38px;
+  --input-width: 150px;
   --btn-size: 38px;
   --folder-btn-size: 38px;
   --dialog-width: 720px;
@@ -29,4 +60,13 @@
   --color-blue-focus-ring: rgba(30, 144, 255, 0.15);
   --color-blue-focus-ring-desc: rgba(30, 144, 255, 0.12);
   --color-overlay: rgba(15, 23, 42, 0.32);
+}
+
+@mixin display-flex-row {
+  display: flex;
+  flex-direction: row;
+}
+@mixin display-flex-column {
+  display: flex;
+  flex-direction: column;
 }

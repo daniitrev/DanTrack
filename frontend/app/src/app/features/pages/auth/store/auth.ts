@@ -1,14 +1,14 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { AuthResponse, UserModel } from '../model/auth';
-import { LoginDto } from '../pages/login/model/login';
-import { RegisterDto } from '../pages/registration/model/registraion';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, firstValueFrom, pipe } from 'rxjs';
 import { ApiService } from '../../../../core/service/api/api';
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { HttpEntity, loadStateEntity$ } from '../../../../shared/loadStateFunction';
 import { AuthService } from '../service/auth';
 import { Router } from '@angular/router';
+import {RegisterDto} from '../pages/page-registration/model/page-registration';
+import {LoginDto} from '../pages/page-login/model/page-login';
 
 type AuthState = {
   userState: HttpEntity<UserModel | null>;
@@ -28,7 +28,9 @@ export const AuthStore = signalStore(
     isAuthenticated: false,
   }),
 
-  withComputed(() => ({})),
+  withComputed((store) => ({
+    isLoggedIn: computed(() => store.isAuthenticated()),
+  })),
 
   withMethods((store) => {
     const router = inject(Router);

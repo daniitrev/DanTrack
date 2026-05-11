@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class BuildQuery {
   buildQuery(params: Record<string, string | undefined>) {
     const searchParams = new URLSearchParams();

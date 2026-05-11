@@ -8,3 +8,10 @@ export interface LoginDto {
   username?: string;
   password: string;
 }
+
+export interface UpdateDto{
+  email?: string;
+  name?: string;
+  password?: string;
+  image?: string;
+}

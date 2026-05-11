@@ -1,16 +1,23 @@
-import { Component, input } from '@angular/core';
-import {ControlValueAccessor} from '@angular/forms';
+import { Component, forwardRef, input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface SelectOption {
-  label: string;
-  value: string;
+  label: string | undefined;
+  value: string | undefined;
 }
 
 @Component({
   selector: 'app-ui-select',
   standalone: true,
   template: `
-    <select [name]="name()" [id]="id()">
+    <select
+      [id]="id()"
+      [name]="name()"
+      [value]="value"
+      [disabled]="disabled"
+      (change)="handleChange($event)"
+      (blur)="handleBlur()"
+    >
       @for (option of options(); track option.value) {
         <option [value]="option.value">
           {{ option.label }}
@@ -20,7 +27,7 @@ export interface SelectOption {
   `,
   styles: `
     select {
-      width: 100%;
+      width: var(--input-width);
       min-height: var(--input-height);
       border: 1px solid var(--color-blue-light-bg);
       border-radius: var(--border-radius-md);
@@ -29,22 +36,48 @@ export interface SelectOption {
       padding: 0 12px;
     }
   `,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => UiSelectComponent),
+      multi: true,
+    },
+  ],
 })
 export class UiSelectComponent implements ControlValueAccessor {
   readonly name = input('name');
   readonly id = input('');
   readonly options = input<SelectOption[]>([]);
 
-  writeValue(obj: any): void {
-    throw new Error("Method not implemented.");
+  value = 'Выберите значение';
+  disabled = false;
+
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
+
+  writeValue(value: string | null): void {
+    this.value = value ?? '';
   }
-  registerOnChange(fn: any): void {
-    throw new Error("Method not implemented.");
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
   }
-  registerOnTouched(fn: any): void {
-    throw new Error("Method not implemented.");
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  handleChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.value = target.value;
+    this.onChange(this.value);
+  }
+
+  handleBlur(): void {
+    this.onTouched();
   }
 }

@@ -1,13 +1,14 @@
-import { Elysia, t } from "elysia";
-import { AuthService } from "./service";
-import { ErrorHandler } from "../../../middelware/utils/error/error";
-
+import {Elysia, t} from "elysia";
+import {AuthService} from "./service";
+import {ErrorHandler} from "../../../middelware/utils/error/error";
+import {AuthPlugin} from "../../middleware/auth";
 
 const isProd = process.env.NODE_ENV === "production";
 const accessTokenMaxAge = 60 * 20;
 const refreshTokenMaxAge = 60 * 60 * 24 * 30;
 
 export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
+
   .post(
     "register",
     async ({ body, cookie }) => {
@@ -143,3 +144,41 @@ export const AuthRouter = new Elysia({ prefix: "/api/v1/auth" })
       }
     }
   });
+
+
+export const AuthRouterSub = new Elysia({prefix: "/api/v1"}).use(AuthPlugin)
+    .patch("update", async ({body, currentUser}) => {
+      try {
+        const { email, password, name, image } = body;
+        const updates = await AuthService.update(
+          { email, name, image, password },
+          currentUser,
+        );
+        return {
+          user: {
+            updates
+          }
+        }
+      }
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          throw err;
+        }
+      }}, {
+      body: t.Object({
+        email: t.Optional(t.String({ format: "email" })),
+        name: t.Optional(t.String()),
+        password: t.Optional(t.String()),
+        image: t.Optional(t.String()),
+      })
+    })
+    .get("user", async ({ currentUser }) => {
+      try{
+        return await AuthService.getCurrentUser(currentUser)
+      }
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          throw err;
+        }
+      }
+    })
