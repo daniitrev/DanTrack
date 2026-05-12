@@ -1,0 +1,48 @@
+@use '../../../styles' as *;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  background:  repeating-linear-gradient( color-mix(in srgb, var(--color-navy) 70%, white),
+  color-mix(in srgb, var(--color-medium-slate-blue) 45%,
+  darkblue)) ;
+  @include display-flex-column();
+  height: 100%;
+  padding: 12px 20px;
+
+  .sidebar_header__brand{
+    color: var(--color-white);
+  }
+}
+
+
+
+.sidebar_main{
+  margin-top: 50%;
+  @include display-flex-column();
+  .sidebar_navigation {
+    @include display-flex-column;
+    gap: 20px;
+
+    .sidebar-router__active {
+      background: var(--color-white);
+    }
+
+    li {
+      background: var(--c);
+      list-style: none;
+      border-radius: var(--border-radius-md);
+      width: fit-content;
+      padding: 10px 12px;
+      text-align: start;
+      text-transform: uppercase;
+    }
+  }
+}
+
+footer{
+  margin-top: auto;
+}

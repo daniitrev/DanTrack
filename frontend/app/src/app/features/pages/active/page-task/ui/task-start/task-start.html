@@ -1,0 +1,57 @@
+<section class="timer-card">
+  <div class="timer-card__header">
+    <div>
+      <p class="timer-card__eyebrow">Time Tracking</p>
+      <h3>Быстрый запуск таймера</h3>
+    </div>
+    <span class="timer-card__badge">Live</span>
+  </div>
+
+  <div class="timer-hero">
+    <div class="timer-hero__ring">
+      <div class="timer-hero__content">
+        <p class="timer-hero__label">Текущее время</p>
+        <div class="timer-hero__digits">
+          <span>{{ hours() | number: '2.0-0' }}</span>
+          <span>:</span>
+          <span>{{ minutes() | number: '2.0-0' }}</span>
+          <span>:</span>
+          <span>{{ seconds() | number: '2.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-progress">
+      <div class="timer-progress__track">
+        <div class="timer-progress__value" [style.transform]="'scaleX(' + target() / 100 + ')'"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timer-selects">
+    <form class="timer-selects__group" [formGroup]="getProjectDetail">
+      <label class="timer-label" for="timer-project">Проект</label>
+      <app-ui-select
+        id="timer-project"
+        formControlName="projectId"
+        [options]="projectOptions()"
+        (change)="projectDetail()"
+      />
+    </form>
+
+    <form class="timer-selects__group" [formGroup]="startEntryForm" (submit)="createTimeEntry()">
+      <label class="timer-label" for="timer-task">Задача</label>
+      <div class="timer-selects__row">
+        <app-ui-select id="timer-task" formControlName="taskId" [options]="taskOptions()" />
+
+      </div>
+      <div class="timer-actions">
+        <app-ui-button type="submit" styles="actions" (pressed)="timerStart()">Старт</app-ui-button>
+        <app-ui-button type="button" styles="actions" (pressed)="timerStop()">Стоп</app-ui-button>
+        <app-ui-button type="button" styles="actions" (pressed)="clearTimer()">Сброс</app-ui-button>
+      </div>
+    </form>
+  </div>
+
+
+</section>

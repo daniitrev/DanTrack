@@ -1,0 +1,80 @@
+<section class="profile-page">
+  <div class="profile-shell">
+    <header class="profile-hero">
+      <div class="profile-hero__copy">
+        <p class="profile-eyebrow">Profile</p>
+        <h1>Личный профиль</h1>
+        <p class="profile-hero__text">
+          Просматривай основные данные аккаунта в одном спокойном и чистом интерфейсе.
+        </p>
+      </div>
+    </header>
+
+    @if (store.page().loading) {
+      <section class="profile-card profile-card--state">
+        <p>Загрузка профиля...</p>
+      </section>
+    } @else if (store.page().error) {
+      <section class="profile-card profile-card--state">
+        <p>{{ store.page().error }}</p>
+      </section>
+    } @else if (store.profile(); as user) {
+      <section class="profile-card">
+        <div class="profile-card__top">
+          <div class="profile-avatar">
+            @if (user.image) {
+              <img [src]="user.image" [alt]="user.name || 'User avatar'" />
+            } @else {
+              <span>{{ (user.name?.[0] || user.email[0] || 'U').toUpperCase() }}</span>
+            }
+          </div>
+
+          <div class="profile-summary">
+            <h2>{{ user.name || 'Без имени' }}</h2>
+            <p>{{ user.email }}</p>
+
+            @if (user.role) {
+              <div class="profile-role">
+                <span>{{ user.role }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <article class="profile-field">
+            <span class="profile-field__label">Имя</span>
+            <strong class="profile-field__value">{{ user.name || 'Не указано' }}</strong>
+          </article>
+
+          <article class="profile-field">
+            <span class="profile-field__label">Email</span>
+            <strong class="profile-field__value">{{ user.email }}</strong>
+          </article>
+
+          <article class="profile-field">
+            <span class="profile-field__label">Роль</span>
+            <strong class="profile-field__value">{{ user.role || 'Не указана' }}</strong>
+          </article>
+
+          <article class="profile-field">
+            <span class="profile-field__label">Фото профиля</span>
+            <strong class="profile-field__value">
+              {{ user.image ? 'Загружено' : 'Не загружено' }}
+            </strong>
+          </article>
+        </div>
+      </section>
+    } @else {
+      <section class="profile-card profile-card--state">
+        <p>Профиль пока недоступен.</p>
+      </section>
+    }
+
+    <app-ui-button (pressed)="openUpdateComponent()">изменить</app-ui-button>
+  </div>
+</section>
+
+@if(isUpdateComponentOpen()){
+  <app-update-profile (close)="closeUpdateComponent()"></app-update-profile>
+}

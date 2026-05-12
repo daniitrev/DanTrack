@@ -1,0 +1,108 @@
+<section class="task-page">
+  <div class="task-shell">
+    <div class="task-page__header">
+      <div class="task-page__heading">
+        <h2>Задачи</h2>
+        <p>Создавай задачи, назначай исполнителей и управляй статусами внутри проекта.</p>
+      </div>
+    </div>
+
+    <div class="task-layout">
+      <form class="task-form-card" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="task-card__title">
+          <h3>Новая задача</h3>
+          <p>Базовый сценарий создания задачи по требованиям ТЗ.</p>
+        </div>
+
+        <div class="task-field">
+          <label for="task-project">Проект</label>
+          <app-ui-select id="task-project" formControlName="projectId" [options]="projectOptions()" />
+        </div>
+
+        <div class="task-field">
+          <label for="task-title">Название задачи</label>
+          <app-ui-input id="task-title" type="text" formControlName="title" placeholder="Введите название задачи" />
+        </div>
+
+        <div class="task-field">
+          <label for="task-description">Описание</label>
+          <app-ui-textarea id="task-description" formControlName="description" placeholder="Коротко опиши задачу" />
+        </div>
+
+        <div class="task-field-grid">
+          <div class="task-field">
+            <label for="task-priority">Приоритет</label>
+            <app-ui-select id="task-priority" formControlName="priority" [options]="priorityOptions" />
+          </div>
+
+          <div class="task-field">
+            <label for="task-status">Статус</label>
+            <app-ui-select id="task-status" formControlName="status" [options]="statusOptions" />
+          </div>
+        </div>
+
+        <div class="task-field-grid">
+          <div class="task-field">
+            <label for="task-deadline">Дедлайн</label>
+            <input id="task-deadline" class="task-native-input" type="date" formControlName="deadline" />
+          </div>
+
+          <div class="task-field">
+            <label for="task-assignee">Исполнитель</label>
+            <app-ui-select id="task-assignee" formControlName="assigneeId" [options]="assigneeOptions()" />
+          </div>
+        </div>
+
+        <div class="task-form__actions">
+          <app-ui-button type="submit" styles="actions">Создать задачу</app-ui-button>
+        </div>
+      </form>
+
+      <section class="task-panel">
+        <div class="task-card__title">
+          <h3>Список задач</h3>
+          <p>
+            @if (taskForm.controls.projectId.value) {
+              Проект выбран. Нажми на задачу, чтобы открыть детали.
+            } @else {
+              Сначала выбери проект.
+            }
+          </p>
+        </div>
+
+        @if (store.page().loading) {
+          <div class="task-empty">Загрузка задач...</div>
+        } @else if (store.page().error) {
+          <div class="task-empty">{{ store.page().error }}</div>
+        } @else if (store.taskPage()?.length) {
+          <div class="task-list">
+            @for (task of store.taskPage(); track task.taskId) {
+              <article class="task-item" (click)="selectTask(task.taskId)">
+                <div class="task-item__header">
+                  <h4>{{ task.title }}</h4>
+                  <span class="task-item__status">{{ task.status }}</span>
+                </div>
+                <p>{{ task.description }}</p>
+                <div class="task-item__meta">
+                  <span>Priority: {{ task.priority }}</span>
+                  <span>Deadline: {{ task.deadline | date: 'dd.MM.yyyy' }}</span>
+                  <span>Assignee: {{ task.assignee?.name || task.assignee?.email || 'Не назначен' }}</span>
+                </div>
+                <div class="task-item__actions">
+                  <app-ui-button type="button" styles="default" (pressed)="selectTask(task.taskId)">Открыть</app-ui-button>
+                  <app-ui-button type="button" styles="actions" (pressed)="deleteTask(task.taskId)">Удалить</app-ui-button>
+                </div>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="task-empty">Для выбранного проекта задач пока нет.</div>
+        }
+      </section>
+    </div>
+
+    @if (store.currentTaskData(); as task) {
+
+    }
+  </div>
+</section>

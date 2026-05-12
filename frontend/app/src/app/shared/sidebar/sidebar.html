@@ -1,0 +1,23 @@
+<div class="sidebar">
+  <header class="sidebar_header">
+    <div class="sidebar_header__brand">
+      <h1>Dan_Track</h1>
+    </div>
+  </header>
+
+  <main class="sidebar_main">
+  <nav class="sidebar_navigation">
+    <li routerLink="/main/projects" routerLinkActive="sidebar-router__active">Проекты</li>
+    <li routerLink="/main/tasks" routerLinkActive="sidebar-router__active">Задачи</li>
+    <li routerLink="/main/reports" routerLinkActive="sidebar-router__active">Отчеты</li>
+    <li routerLink="/main/time-entries" routerLinkActive="sidebar-router__active">Временные Записи</li>
+    <li routerLink="/main/profile" routerLinkActive="sidebar-router__active">Профиль</li>
+  </nav>
+  </main>
+
+  <footer>
+    <div class="sidebar_actions">
+    <app-ui-button (pressed)="logout()" styles="actions">Выход</app-ui-button>
+    </div>
+  </footer>
+</div>

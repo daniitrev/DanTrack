@@ -1,0 +1,149 @@
+<section class="reports-page">
+  <div class="reports-shell">
+    <div class="reports-hero">
+      <h1>Reports</h1>
+      <p>Здесь будет страница аналитики и отчетов по проектам, задачам и времени.</p>
+    </div>
+
+    <div class="reports-grid">
+      <article class="reports-card">
+        <h2>Summary</h2>
+        <form class="reports-filter" [formGroup]="periodForm" (ngSubmit)="loadReports()">
+          <label class="reports-filter__field" for="summary_start">
+            <span>Начало</span>
+            <input id="summary_start" type="date" formControlName="startTime" />
+          </label>
+
+          <label class="reports-filter__field" for="summary_end">
+            <span>Конец</span>
+            <input id="summary_end" type="date" formControlName="endTime" />
+          </label>
+
+          <app-ui-button type="submit" styles="actions">Обновить</app-ui-button>
+        </form>
+
+        @if (store.summary().loading) {
+          <p>Загрузка сводки...</p>
+        } @else if (store.summary().error) {
+          <p>{{ store.summary().error }}</p>
+        } @else {
+          <div class="reports-summary">
+            <div class="reports-summary__item">
+              <span class="reports-summary__label">Projects</span>
+              <strong class="reports-summary__value">{{
+                store.summaryReport()?.projects?.length ?? 0
+              }}</strong>
+            </div>
+            <div class="reports-summary__item">
+              <span class="reports-summary__label">Tasks</span>
+              <strong class="reports-summary__value">{{
+                store.summaryReport()?.tasks?.length ?? 0
+              }}</strong>
+            </div>
+            <div class="reports-summary__item">
+              <span class="reports-summary__label">Time Entries</span>
+              <strong class="reports-summary__value">{{
+                store.summaryReport()?.timeEntry?.length ?? 0
+              }}</strong>
+            </div>
+            <div class="reports-summary__item">
+              <span class="reports-summary__label">Members</span>
+              <strong class="reports-summary__value">{{
+                store.summaryReport()?.memberOfProject?.length ?? 0
+              }}</strong>
+            </div>
+          </div>
+        }
+      </article>
+
+      <article class="reports-card">
+        <h2>By Project</h2>
+        @if (store.byProject().loading) {
+          <p>Загрузка отчета по проектам...</p>
+        } @else if (store.byProject().error) {
+          <p>{{ store.byProject().error }}</p>
+        } @else if (store.reportsByProject()) {
+          <div class="reports-list">
+            @for (item of store.reportsByProject(); track item.project.projectId) {
+              <div class="reports-list__item">
+                <div class="reports-list__header">
+                  <strong>{{ item.project.title }}</strong>
+                  <span>{{ item.project.status || 'Без статуса' }}</span>
+                </div>
+                <p>{{ item.project.description || 'Описание не указано' }}</p>
+                <div class="reports-meta">
+                  <span>Tasks: {{ item.tasks.length || 0}}</span>
+                  <span>Time Entries: {{ item.timeEntries.length || 0}}</span>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p>За выбранный период проектов не найдено.</p>
+        }
+      </article>
+
+      <article class="reports-card">
+        <h2>By Member</h2>
+        @if (store.byMember().loading) {
+          <p>Загрузка отчета по участникам...</p>
+        } @else if (store.byMember().error) {
+          <p>{{ store.byMember().error }}</p>
+        } @else if (store.reportsByMember()) {
+          <div class="reports-list">
+            @for (item of store.reportsByMember(); track item.project.projectId) {
+              @let memberList = item.membersList;
+              @let projectList = item.project;
+              <div class="reports-list__item">
+                <div class="reports-list__header">
+                  <strong>{{ projectList.title }}</strong>
+                  <span>Members: {{ memberList.length || 0 }}</span>
+                </div>
+
+                @if (item.membersList.length ?? 0) {
+                  <div class="reports-tags">
+                    @for (member of memberList; track member.member.memberId) {
+                      <span class="reports-tag">
+                        {{ member.user?.email || member.member.memberId }}
+                      </span>
+                    }
+                  </div>
+                } @else {
+                  <p>Участники за период не найдены.</p>
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          <p>Нет данных по участникам за выбранный период.</p>
+        }
+      </article>
+
+      <article class="reports-card">
+        <h2>Daily</h2>
+        @if (store.daily().loading) {
+          <p>Загрузка дневного отчета...</p>
+        } @else if (store.daily().error) {
+          <p>{{ store.daily().error }}</p>
+        } @else if (store.dailyReports()) {
+          <div class="reports-list">
+            @for (day of store.dailyReports()! | keyvalue; track day.key) {
+              <div class="reports-list__item">
+                <div class="reports-list__header">
+                  <strong>{{ day.key }}</strong>
+                </div>
+                <div class="reports-meta">
+                  <span>Projects: {{ day.value.projects.length || 0 }}</span>
+                  <span>Tasks: {{ day.value.tasks.length || 0 }}</span>
+                  <span>Time Entries: {{ day.value.timeEntries.length || 0 }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p>Дневной отчет пока пуст.</p>
+        }
+      </article>
+    </div>
+  </div>
+</section>

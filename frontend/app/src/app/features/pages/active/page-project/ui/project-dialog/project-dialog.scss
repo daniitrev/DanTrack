@@ -1,0 +1,139 @@
+@use '../../../../../../../styles' as *;
+
+.dialog_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--color-overlay);
+}
+
+.dialog_wrapper {
+  @include display-flex-column;
+  gap: 22px;
+  width: min(100%, var(--dialog-width));
+  padding: 28px;
+  border-radius: var(--border-radius-xl);
+  background: var(--color-white);
+  box-shadow: var(--dialog-shadow);
+  border: 1px solid color-mix(in srgb, var(--color-blue-light-border) 24%, transparent);
+}
+
+.result {
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  min-width: 220px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--color-blue-light-bg);
+  border: 1px solid var(--color-blue-light-border);
+  box-shadow: 0 10px 24px var(--color-blue-focus-ring-desc);
+}
+
+.result p {
+  margin: 0;
+  color: var(--color-text-main);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dialog_header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-blue-light-border) 20%, transparent);
+}
+
+.dialog_heading {
+  @include display-flex-column;
+  gap: 8px;
+  max-width: 520px;
+}
+
+.dialog_heading h2 {
+  margin: 0;
+  color: var(--color-text-main);
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.dialog_heading p {
+  margin: 0;
+  color: var(--color-light-gray);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dialog_container {
+  @include display-flex-column;
+  gap: 18px;
+}
+
+.dialog_field {
+  @include display-flex-column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--border-radius-lg);
+  background: color-mix(in srgb, var(--color-blue-light-bg) 55%, var(--color-white));
+  border: 1px solid color-mix(in srgb, var(--color-blue-light-border) 14%, transparent);
+}
+
+.dialog_label {
+  color: var(--color-text-main);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dialog_select {
+  width: 100%;
+  min-height: var(--input-height);
+  padding: 0 12px;
+  border: 1px solid var(--color-blue-light-bg);
+  border-radius: var(--border-radius-md);
+  background: var(--color-white);
+  color: var(--color-text-main);
+}
+
+.dialog_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--color-blue-light-border) 20%, transparent);
+}
+
+.dialog_header app-ui-button,
+.dialog_actions app-ui-button {
+  display: block;
+}
+
+.dialog_header app-ui-button {
+  color: var(--color-text-main);
+}
+
+.dialog_actions app-ui-button:first-child {
+  color: var(--color-light-gray);
+}
+
+.dialog_actions app-ui-button:last-child {
+  color: var(--color-royal-blue);
+}
+
+@media (max-width: 640px) {
+  .dialog_overlay {
+    padding: 16px;
+  }
+
+  .dialog_wrapper {
+    padding: 20px;
+  }
+}

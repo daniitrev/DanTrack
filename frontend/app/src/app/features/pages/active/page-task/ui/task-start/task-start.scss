@@ -1,0 +1,175 @@
+@use '../../../../../../../styles' as *;
+
+.timer-card {
+  @include display-flex-column;
+  gap: 22px;
+  width: min(100%, 420px);
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(100, 149, 237, 0.18);
+  background:
+    radial-gradient(circle at top right, rgba(123, 104, 238, 0.1), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 18px 36px rgba(31, 41, 55, 0.08);
+}
+
+.timer-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.timer-card__eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-royal-blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.timer-card__header h3 {
+  margin: 0;
+  color: var(--color-text-main);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.timer-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--color-blue-light-bg);
+  color: var(--color-royal-blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.timer-hero {
+  @include display-flex-column;
+  gap: 16px;
+}
+
+.timer-hero__ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  border-radius: 32px;
+  border: 1px solid rgba(100, 149, 237, 0.18);
+  background:
+    linear-gradient(135deg, rgba(123, 104, 238, 0.12), rgba(64, 224, 208, 0.1)),
+    var(--color-white);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.timer-hero__content {
+  text-align: center;
+}
+
+.timer-hero__label {
+  margin: 0 0 12px;
+  color: var(--color-light-gray);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.timer-hero__digits {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-main);
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.timer-progress {
+  display: flex;
+  align-items: center;
+}
+
+.timer-progress__track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-blue-light-bg);
+}
+
+.timer-progress__value {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-dodger-blue), var(--color-medium-slate-blue));
+  transform-origin: left;
+  transition: transform 1s linear;
+}
+
+.timer-selects {
+  @include display-flex-column;
+  gap: 16px;
+}
+
+.timer-selects__group {
+  @include display-flex-column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--border-radius-lg);
+  background: color-mix(in srgb, var(--color-blue-light-bg) 55%, var(--color-white));
+  border: 1px solid color-mix(in srgb, var(--color-blue-light-border) 14%, transparent);
+}
+
+.timer-label {
+  color: var(--color-text-main);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.timer-selects__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.timer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.timer-actions app-ui-button {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .timer-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .timer-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timer-hero__ring {
+    min-height: 180px;
+    border-radius: 24px;
+  }
+
+  .timer-hero__digits {
+    font-size: 34px;
+  }
+
+  .timer-selects__row {
+    grid-template-columns: 1fr;
+  }
+}

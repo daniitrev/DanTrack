@@ -1,0 +1,44 @@
+<form class="task-detail-card" [formGroup]="editForm" (ngSubmit)="updateTask()">
+  <div class="task-card__title">
+    <h3>Детали задачи</h3>
+    <p>Редактируй статус, дедлайн, исполнителя и описание выбранной задачи.</p>
+  </div>
+
+  <div class="task-field">
+    <label for="detail-title">Название</label>
+    <app-ui-input id="detail-title" type="text" formControlName="title" placeholder="Название задачи" />
+  </div>
+
+  <div class="task-field">
+    <label for="detail-description">Описание</label>
+    <app-ui-textarea id="detail-description" formControlName="description" placeholder="Описание задачи" />
+  </div>
+
+  <div class="task-field-grid">
+    <div class="task-field">
+      <label for="detail-priority">Приоритет</label>
+      <app-ui-select id="detail-priority" formControlName="priority" [options]="priorityOptions" />
+    </div>
+
+    <div class="task-field">
+      <label for="detail-status">Статус</label>
+      <app-ui-select id="detail-status" formControlName="status" [options]="statusOptions" />
+    </div>
+  </div>
+
+  <div class="task-field-grid">
+    <div class="task-field">
+      <label for="detail-deadline">Дедлайн</label>
+      <input id="detail-deadline" class="task-native-input" type="date" formControlName="deadline" />
+    </div>
+
+    <div class="task-field">
+      <label for="detail-assignee">Исполнитель</label>
+      <app-ui-select id="detail-assignee" formControlName="assigneeId" [options]="assigneeOptions()" />
+    </div>
+  </div>
+
+  <div class="task-form__actions">
+    <app-ui-button type="submit" styles="actions">Сохранить изменения</app-ui-button>
+  </div>
+</form>

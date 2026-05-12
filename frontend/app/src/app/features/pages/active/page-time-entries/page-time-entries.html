@@ -1,0 +1,30 @@
+<section class="time-entries-page">
+    <div class="time-entries-shell">
+      <div class="time-entries-hero">
+        <h1>Time Entries</h1>
+        <p>История записей времени в удобном для чтения формате.</p>
+      </div>
+
+      @if (store.timeEntryPage()?.length) {
+        <div class="time-entries-layout">
+          @for (entry of store.timeEntryPage(); track entry.timeEntryId) {
+            <article class="time-entries-card">
+              <h2>{{ entry.title }}</h2>
+              <p>Старт: {{ entry.startTime | date: 'dd.MM.yyyy, HH:mm' }}</p>
+              <p>Конец: {{ entry.endTime ? (entry.endTime | date: 'dd.MM.yyyy, HH:mm') : 'Еще идет' }}</p>
+              <p>Создано: {{ entry.createdAt | date: 'dd.MM.yyyy, HH:mm' }}</p>
+              <app-ui-button (click)="stopTimeEntry( entry.timeEntryId )"> stop </app-ui-button>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="time-entries-layout">
+          <article class="time-entries-card">
+            <h2>Entries List</h2>
+            <p>Пока нет записей времени для отображения.</p>
+          </article>
+        </div>
+      }
+    </div>
+  </section>
+<app-task-start></app-task-start>

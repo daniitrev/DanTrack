@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-layout__sidebar {
+  flex: 1 1 0;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+.main-layout__content {
+  flex: 2 1 0;
+  min-width: 0;
+  padding: 24px 32px;
+}

@@ -1,0 +1,44 @@
+<div class="dialog_overlay">
+  <form class="dialog_wrapper" [formGroup]="profileForm" (ngSubmit)="update()">
+    <div class="dialog_header">
+      <div class="dialog_heading">
+        <h2>Редактирование профиля</h2>
+        <p>Обнови основные данные аккаунта в привычном компактном окне.</p>
+      </div>
+
+      <app-ui-button type="button" (pressed)="close.emit()" styles="default">×</app-ui-button>
+    </div>
+
+    <div class="dialog_container">
+      <div class="dialog_field">
+        <label class="dialog_label" for="profile_name">Имя</label>
+        <app-ui-input
+          id="profile_name"
+          type="text"
+          formControlName="name"
+          placeholder="Введите имя"
+        />
+      </div>
+
+      <div class="dialog_field">
+        <label class="dialog_label" for="profile_email">Email</label>
+        <app-ui-input
+          id="profile_email"
+          type="text"
+          formControlName="email"
+          placeholder="Введите email"
+        />
+      </div>
+
+      <div class="dialog_field">
+        <label class="dialog_label" for="profile_image">Фото профиля</label>
+        <input id="profile_image" type="file" accept="image/*" (change)="onImageChange($event)" />
+      </div>
+    </div>
+
+    <div class="dialog_actions">
+      <app-ui-button type="button" (pressed)="close.emit()" styles="default">Отмена</app-ui-button>
+      <app-ui-button type="submit" styles="actions">Сохранить</app-ui-button>
+    </div>
+  </form>
+</div>
