@@ -16,10 +16,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['page-task.scss'],
   imports: [ReactiveFormsModule, UiInput, UiTextarea, UiButton, UiSelectComponent, DatePipe],
   providers: [TaskPageStore],
+  standalone: true,
 })
 export class TaskPage {
   readonly store = inject(TaskPageStore);
   readonly projectStore = inject(ProjectPageStore);
+
+
+
+  readonly assigneeOptions = computed<SelectOption[]>(() => [
+    { label: 'Без исполнителя', value: '' },
+    ...((this.projectStore.currentProject()?.memberOfProject ?? [])
+      .map((member) => ({
+        label: member.member.name || member.member.email,
+        value: member.member.userId,
+      }))
+      .filter((member) => member.label && member.value)),
+  ]);
+
 
   readonly priorityOptions: SelectOption[] = [
     { label: 'ABSENT', value: 'ABSENT' },
@@ -37,16 +51,6 @@ export class TaskPage {
       }))
       .filter((project) => project.label && project.value),
   );
-
-  readonly assigneeOptions = computed<SelectOption[]>(() => [
-    { label: 'Без исполнителя', value: '' },
-    ...((this.projectStore.currentProject()?.memberOfProject ?? [])
-      .map((member) => ({
-        label: member.member.name || member.member.email,
-        value: member.member.userId,
-      }))
-      .filter((member) => member.label && member.value)),
-  ]);
 
   readonly taskForm = new FormGroup({
     title: new FormControl('', {

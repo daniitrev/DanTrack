@@ -15,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   />`,
   styles: `
     input {
-      width: var(--input-width, 100%);
+      width: 100%;
       height: var(--input-height);
       border: 1px solid var(--color-blue-light-bg);
       border-radius: var(--border-radius-md);

@@ -8,7 +8,7 @@
     </div>
 
     <div class="task-layout">
-      <form class="task-form-card" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <form class="task-form-card" [formGroup]="taskForm" (submit)="onSubmit()">
         <div class="task-card__title">
           <h3>Новая задача</h3>
           <p>Базовый сценарий создания задачи по требованиям ТЗ.</p>
@@ -35,10 +35,6 @@
             <app-ui-select id="task-priority" formControlName="priority" [options]="priorityOptions" />
           </div>
 
-          <div class="task-field">
-            <label for="task-status">Статус</label>
-            <app-ui-select id="task-status" formControlName="status" [options]="statusOptions" />
-          </div>
         </div>
 
         <div class="task-field-grid">
@@ -85,7 +81,7 @@
                 <p>{{ task.description }}</p>
                 <div class="task-item__meta">
                   <span>Priority: {{ task.priority }}</span>
-                  <span>Deadline: {{ task.deadline | date: 'dd.MM.yyyy' }}</span>
+                  <span>Deadline: {{ task.deadline | date : 'dd.MM.yyyy' }}</span>
                   <span>Assignee: {{ task.assignee?.name || task.assignee?.email || 'Не назначен' }}</span>
                 </div>
                 <div class="task-item__actions">

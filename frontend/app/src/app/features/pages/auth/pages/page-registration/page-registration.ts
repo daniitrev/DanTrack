@@ -2,13 +2,14 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../store/auth';
+import {UiInput} from '../../../../../shared/ui/input';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './page-registration.html',
   styleUrls: ['./page-registration.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, UiInput],
 })
 export class RegistrationComponent {
   readonly userStore = inject(AuthStore);

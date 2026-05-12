@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../store/auth';
+import {UiInput} from '../../../../../shared/ui/input';
 
 @Component({
   selector: 'app-login',
   templateUrl: './page-login.html',
   styleUrls: ['./page-login.scss'],
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, UiInput],
   standalone: true,
 })
 export class LoginComponent {

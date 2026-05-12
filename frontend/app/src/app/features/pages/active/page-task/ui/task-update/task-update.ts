@@ -6,6 +6,7 @@ import {UiButton} from '../../../../../../shared/ui/button';
 import {UiInput} from '../../../../../../shared/ui/input';
 import {UiTextarea} from '../../../../../../shared/ui/textarea';
 import {Priority, TaskStatus, UpdateTaskPayload} from '../../model/page-task';
+import {ProjectPageStore} from '../../../page-project/store/page-project';
 
 @Component({
   selector: 'task-update',
@@ -22,17 +23,35 @@ import {Priority, TaskStatus, UpdateTaskPayload} from '../../model/page-task';
 
 export class TaskUpdateComponent {
   readonly store = inject(TaskPageStore)
+  readonly projectStore = inject(ProjectPageStore)
   private toDateInputValue(value: string | Date) {
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? '' : date.toISOString().slice(0, 10);
   }
-  
+
+  readonly assigneeOptions = computed<SelectOption[]>(() => [
+    { label: 'Без исполнителя', value: '' },
+    ...((this.projectStore.currentProject()?.memberOfProject ?? [])
+      .map((member) => ({
+        label: member.member.name || member.member.email,
+        value: member.member.userId,
+      }))
+      .filter((member) => member.label && member.value)),
+  ]);
+
   readonly statusOptions: SelectOption[] = [
     { label: 'NOT_STARTED', value: 'NOT_STARTED' },
     { label: 'TODO', value: 'TODO' },
     { label: 'IN_PROGRESS', value: 'IN_PROGRESS' },
     { label: 'IN_REVIEW', value: 'IN_REVIEW' },
     { label: 'DONE', value: 'DONE' },
+  ];
+
+  readonly priorityOptions: SelectOption[] = [
+    { label: 'ABSENT', value: 'ABSENT' },
+    { label: 'LOW', value: 'LOW' },
+    { label: 'HIGH', value: 'HIGH' },
+    { label: 'CRITICAL', value: 'CRITICAL' },
   ];
 
   constructor() {
